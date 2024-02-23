@@ -1,0 +1,27 @@
+{
+  "name": "csv-except",
+  "version": "1.0.0",
+  "description": "NPM package to quickly find differences between CSV files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cavallom/csv-except.git"
+  },
+  "keywords": [
+    "csv",
+    "diff",
+    "except",
+    "comparison",
+    "find",
+    "differences"
+  ],
+  "author": "Massimo Cavallo <m.cavallo@restful.it>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cavallom/csv-except/issues"
+  },
+  "homepage": "https://github.com/cavallom/csv-except#readme"
+}
