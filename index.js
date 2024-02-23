@@ -18,7 +18,7 @@ itWorks = function() {
         
         const end = Date.now();
 
-        throw new csv_queryable_Error(
+        throw new csv_except_Error(
             'itWorks'
             , `${(end - start)}ms.`
             , error.message);
@@ -27,14 +27,14 @@ itWorks = function() {
 
 }
 
-csv_queryable_Error = function(routine = "", executiontime = "", message = "") { 
+csv_except_Error = function(routine = "", executiontime = "", message = "") { 
     
     this.routine = routine;
     this.executiontime = executiontime; 
     this.message = message; 
-    this.name = "csv_queryable_Error";
+    this.name = "csv_except_Error";
 
 } 
-csv_queryable_Error.prototype = Error.prototype;
+csv_except_Error.prototype = Error.prototype;
 
 module.exports = { itWorks };
