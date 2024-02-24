@@ -97,7 +97,7 @@ intersection = function(previousFilePath, currentFilePath) {
     }
 }
 
-except = function(previousFilePath, currentFilePath) {
+difference = function(previousFilePath, currentFilePath) {
 
     const start = Date.now();
 
