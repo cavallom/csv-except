@@ -27,13 +27,13 @@ itWorks = function() {
 
 }
 
-load = function(previousFilePath, currentFilePath) {
+load = function(leftFilePath, rightFilePath) {
 
     const start = Date.now();
 
     try {
 
-        let files = new Array(previousFilePath, currentFilePath);
+        let files = new Array(leftFilePath, rightFilePath);
         let filesName = new Array();
         let filesarray = new Array();
     
@@ -65,7 +65,7 @@ load = function(previousFilePath, currentFilePath) {
     }
 }
 
-intersection = function(previousFilePath, currentFilePath) {
+exceptLeft = function(leftFilePath, rightFilePath) {
 
     const start = Date.now();
 
@@ -73,13 +73,13 @@ intersection = function(previousFilePath, currentFilePath) {
 
         let filesarray = new Array();
 
-        filesarray = load(previousFilePath, currentFilePath);
+        filesarray = load(leftFilePath, rightFilePath);
     
-        let intersection = filesarray[0].filter(x => filesarray[1].includes(x));
+        let _exceptLeft = filesarray[1].filter(x => !filesarray[0].includes(x));
     
         let returnarray = new Array();
     
-        intersection.forEach(element => {
+        _exceptLeft.forEach(element => {
             returnarray.push(element.replace('\r','').split(','))
         });
         
@@ -90,14 +90,14 @@ intersection = function(previousFilePath, currentFilePath) {
         const end = Date.now();
 
         throw new csv_except_Error(
-            'intersection'
+            'exceptLeft'
             , `${(end - start)}ms.`
             , error.message);
 
     }
 }
 
-difference = function(previousFilePath, currentFilePath) {
+exceptRight = function(leftFilePath, rightFilePath) {
 
     const start = Date.now();
 
@@ -105,13 +105,13 @@ difference = function(previousFilePath, currentFilePath) {
 
         let filesarray = new Array();
 
-        filesarray = load(previousFilePath, currentFilePath);
+        filesarray = load(leftFilePath, rightFilePath);
     
-        let difference = filesarray[0].filter(x => !filesarray[1].includes(x));
+        let _exceptRight = filesarray[0].filter(x => !filesarray[1].includes(x));
     
         let returnarray = new Array();
     
-        difference.forEach(element => {
+        _exceptRight.forEach(element => {
             returnarray.push(element.replace('\r','').split(','))
         });
         
@@ -122,14 +122,14 @@ difference = function(previousFilePath, currentFilePath) {
         const end = Date.now();
 
         throw new csv_except_Error(
-            'except'
+            'exceptRight'
             , `${(end - start)}ms.`
             , error.message);
 
     }
 }
 
-symDifference = function(previousFilePath, currentFilePath) {
+intersect = function(leftFilePath, rightFilePath) {
 
     const start = Date.now();
 
@@ -137,14 +137,46 @@ symDifference = function(previousFilePath, currentFilePath) {
 
         let filesarray = new Array();
 
-        filesarray = load(previousFilePath, currentFilePath);
+        filesarray = load(leftFilePath, rightFilePath);
     
-        let symDifference = filesarray[0].filter(x => !filesarray[1].includes(x))
+        let _intersect = filesarray[0].filter(x => filesarray[1].includes(x));
+    
+        let returnarray = new Array();
+    
+        _intersect.forEach(element => {
+            returnarray.push(element.replace('\r','').split(','))
+        });
+        
+        return returnarray;    
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_except_Error(
+            'intersect'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+}
+
+notintersect = function(leftFilePath, rightFilePath) {
+
+    const start = Date.now();
+
+    try {
+
+        let filesarray = new Array();
+
+        filesarray = load(leftFilePath, rightFilePath);
+    
+        let _notintersect = filesarray[0].filter(x => !filesarray[1].includes(x))
                         .concat(filesarray[1].filter(x => !filesarray[0].includes(x)));
     
         let returnarray = new Array();
     
-        symDifference.forEach(element => {
+        _notintersect.forEach(element => {
             returnarray.push(element.replace('\r','').split(','))
         });
         
@@ -155,7 +187,7 @@ symDifference = function(previousFilePath, currentFilePath) {
         const end = Date.now();
 
         throw new csv_except_Error(
-            'symDifference'
+            'notintersect'
             , `${(end - start)}ms.`
             , error.message);
 
@@ -172,4 +204,4 @@ csv_except_Error = function(routine = "", executiontime = "", message = "") {
 } 
 csv_except_Error.prototype = Error.prototype;
 
-module.exports = { itWorks, intersection, except, symDifference };
+module.exports = { itWorks, exceptLeft, exceptRight, intersect, notintersect };

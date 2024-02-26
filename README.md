@@ -6,9 +6,10 @@ The NPM package that quickly finds and returns differences between CSV files.
   - [Installation](#installation)
     - [Package check](#package-check)
   - [Usage](#usage)
-    - [intersection](#intersection)
-    - [difference](#difference)
-    - [symDifference](#symdifference)
+    - [exceptLeft](#exceptleft)
+    - [exceptRight](#exceptright)
+    - [intersect](#intersect)
+    - [notintersect](#notintersect)
   - [Performance considerations](#performance-considerations)
   - [Comma-Separated Values (CSV)](#comma-separated-values-csv)
   - [License](#license)
@@ -42,90 +43,68 @@ console.log(csvexcept.itWorks());
 
 ## Usage
 
-### intersection
+### exceptLeft
 
-Returns values which are present in both two files compared.
+Returns rows which are present in **leftFilePath** excluding rows ​​that are also present in **rightFilePath**. So the rows ​​that are only in **leftFilePath**.
 
 | Param | Type | Mandatory | Description |
 | ----- | ---- | ----------- | --------- |
-| previousFilePath | string | true | Path to previous local CSV file |
-| currentFilePath | string | true | Path to current local CSV file |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
 
 ```bash
 const csvexcept = require('csv-except');
-console.log(csvexcept.booleanValidation('path-to-local-csv-file'));
+console.log(csvexcept.exceptLeft('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output : { bool } > true | false
+#output : { json } > rows
 ```
 
-### difference
+### exceptRight
 
-Returns values ​​present only in the previous file.
+Returns rows which are present in **rightFilePath** excluding rows ​​that are also present in **leftFilePath**. So the rows ​​that are only in **rightFilePath**.
 
 | Param | Type | Mandatory | Description |
 | ----- | ---- | ----------- | --------- |
-| previousFilePath | string | true | Path to previous local CSV file |
-| currentFilePath | string | true | Path to current local CSV file |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
 
 ```bash
 const csvexcept = require('csv-except');
-console.log(csvexcept.jsonValidation('path-to-local-csv-file'));
+console.log(csvexcept.exceptRight('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output { json } > successful validation: {
-#    "csvFile": "path-to-local-csv-file",
-#    "executiontime": "5496ms.",
-#    "rowsCount": 1000001,
-#    "columns": 9,
-#    "badRowsLines": [],
-#    "result": true,
-#    "message": ""
-#}
-
-#output { json } > failed validation: {
-#    "csvFile": "path-to-local-csv-file",
-#    "executiontime": "4817ms.",
-#    "rowsCount": 1000001,
-#    "columns": 9,
-#    "badRowsLines": [
-#        394579,
-#        941245
-#    ],
-#    "result": false,
-#    "message": ""
-#}
-
-#output { json } > failed no such file: {
-#    "csvFile": "path-to-local-csv-file",
-#    "executiontime": "1ms.",
-#    "rowsCount": null,
-#    "columns": null,
-#    "badRowsLines": null,
-#    "result": false,
-#    "message": "ENOENT: no such file or directory, open 'path-to-csv-file'"
-#}
+#output : { json } > rows
 ```
 
-### symDifference
+### intersect
 
-Returns rows that are only in previous CSV file or current, but not both ("exclusive or").
+Returns rows which are present in both **leftFilePath** and **rightFilePath**.
 
 | Param | Type | Mandatory | Description |
 | ----- | ---- | ----------- | --------- |
-| previousFilePath | string | true | Path to previous local CSV file |
-| currentFilePath | string | true | Path to current local CSV file |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
 
 ```bash
-# call example
-# package inclusion
-const csvexcept = require("csv-except");
-# definition of parameters
-const csvFile = 'path-to-local-csv-file';
-const csvDelimiter = ','
-const ignoreEmptyRows = true;
-# call to the csv file reading function
-let load = csvexcept.memorize(csvFile, csvDelimiter, ignoreEmptyRows);
+const csvexcept = require('csv-except');
+console.log(csvexcept.intersect('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output : queryable csv array
+#output : { json } > rows
+```
+
+### notintersect
+
+Returns rows in **leftFilePath** which are not present in **rightFilePath** and rows in **rightFilePath** which are not present in **leftFilePath**.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
+
+```bash
+const csvexcept = require('csv-except');
+console.log(csvexcept.notintersect('path-to-local-csv-file', 'path-to-local-csv-file'));
+
+#output : { json } > rows
 ```
 
 ## Performance considerations
