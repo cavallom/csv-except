@@ -1,6 +1,6 @@
 {
   "name": "csv-except",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NPM package to quickly find differences between CSV files",
   "main": "index.js",
   "scripts": {

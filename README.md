@@ -56,7 +56,7 @@ Returns rows which are present in **leftFilePath** excluding rows ​​that are
 const csvexcept = require('csv-except');
 console.log(csvexcept.exceptLeft('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output : { json } > rows
+#output : { array[][] } > rows
 ```
 
 ### exceptRight
@@ -72,7 +72,7 @@ Returns rows which are present in **rightFilePath** excluding rows ​​that ar
 const csvexcept = require('csv-except');
 console.log(csvexcept.exceptRight('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output : { json } > rows
+#output : { array[][] } > rows
 ```
 
 ### intersect
@@ -88,7 +88,7 @@ Returns rows which are present in both **leftFilePath** and **rightFilePath**.
 const csvexcept = require('csv-except');
 console.log(csvexcept.intersect('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output : { json } > rows
+#output : { array[][] } > rows
 ```
 
 ### notintersect
@@ -104,7 +104,7 @@ Returns rows in **leftFilePath** which are not present in **rightFilePath** and 
 const csvexcept = require('csv-except');
 console.log(csvexcept.notintersect('path-to-local-csv-file', 'path-to-local-csv-file'));
 
-#output : { json } > rows
+#output : { array[][] } > rows
 ```
 
 ## Performance considerations
