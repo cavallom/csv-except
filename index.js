@@ -27,6 +27,24 @@ itWorks = function() {
 
 }
 
+jesonize = function(csvArray, header) {
+
+    // JSON output
+    const csvArrayToJson = (rows) => {  
+        return rows.reduce((jsonArray, row) => {
+            const item = row.reduce((item, value, index) => {
+            return {...item, [header[index]]: value};
+            }, {});
+            return jsonArray.concat(item);
+        }, []);
+    };
+    
+    const csvJsonArray = csvArrayToJson(csvArray);
+
+    return JSON.stringify(csvJsonArray);
+    
+}
+
 load = function(leftFilePath, rightFilePath) {
 
     const start = Date.now();
@@ -204,4 +222,4 @@ csv_except_Error = function(routine = "", executiontime = "", message = "") {
 } 
 csv_except_Error.prototype = Error.prototype;
 
-module.exports = { itWorks, exceptLeft, exceptRight, intersect, notintersect };
+module.exports = { itWorks, jesonize, exceptLeft, exceptRight, intersect, notintersect };
